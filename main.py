@@ -38,12 +38,11 @@ class Lecturer(Mentor):
         super().__init__(name, surname)
         self.scores = {}
 
-    # show what in scores
+    # справочно
     def show_scores(self):
         print(f"В словаре лектора: {self.scores}")
 
     # Average lecturer score
-
     def avg_score(self):
         common_lst = sum(self.scores.values(), start=[])
         return round(sum(common_lst) / len(common_lst), 1)
