@@ -38,12 +38,15 @@ class Lecturer(Mentor):
         super().__init__(name, surname)
         self.scores = {}
 
+    # show what in scores
+    def show_scores(self):
+        print(f"В словаре лектора: {self.scores}")
+
     # Average lecturer score
+
     def avg_score(self):
-        for el in self.scores.values():
-            return sum(el) / len(el)
-        if len(self.scores) == 0:
-            return 0
+        common_lst = sum(self.scores.values(), start=[])
+        return sum(common_lst) / len(common_lst)
 
     # task 3
     def __str__(self):
@@ -84,9 +87,13 @@ some_reviewer = Reviewer("Some", "Buddy")
 
 some_lecturer = Lecturer("Gvido", "Van")
 some_lecturer.courses_attached += ["Python"]
+some_lecturer.courses_attached += ["Git"]
+
 some_student.rate_lecturer(some_lecturer, "Python", 9)
 some_student.rate_lecturer(some_lecturer, "Python", 10)
 some_student.rate_lecturer(some_lecturer, "Git", 4)
 
 print(some_reviewer)
 print(some_lecturer)
+# справочно
+some_lecturer.show_scores()
