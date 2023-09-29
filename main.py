@@ -86,7 +86,7 @@ some_lecturer = Lecturer("Gvido", "Van")
 some_lecturer.courses_attached += ["Python"]
 some_student.rate_lecturer(some_lecturer, "Python", 9)
 some_student.rate_lecturer(some_lecturer, "Python", 10)
-some_student.rate_lecturer(some_lecturer, "Python", 4)
+some_student.rate_lecturer(some_lecturer, "Git", 4)
 
 print(some_reviewer)
 print(some_lecturer)
