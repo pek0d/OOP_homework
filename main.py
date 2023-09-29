@@ -46,7 +46,7 @@ class Lecturer(Mentor):
 
     def avg_score(self):
         common_lst = sum(self.scores.values(), start=[])
-        return sum(common_lst) / len(common_lst)
+        return round(sum(common_lst) / len(common_lst), 1)
 
     # task 3
     def __str__(self):
