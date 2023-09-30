@@ -20,9 +20,31 @@ class Student:
         else:
             return "Ошибка"
 
+    # Average student grade
+    def avg_grade(self):
+        if self.grades:
+            common_grade_lst = sum(self.grades.values(), start=[])
+            return round(sum(common_grade_lst) / len(common_grade_lst), 1)
+        else:
+            return "Нет оценок"
+
+    # справочно
+    def show_grades(self):
+        print(f"В словаре с оценками студента: {self.grades}")
+
     # task 3
     def __str__(self):
-        return f"Имя: {self.name}" + "\n" + f"Фамилия: {self.surname}"
+        return (
+            f"Имя: {self.name}"
+            + "\n"
+            + f"Фамилия: {self.surname}"
+            + "\n"
+            + f"Средняя оценка за домашние задания: {self.avg_grade()}"
+            + "\n"
+            + f"Курсы в процессе изучения: {', '.join(self.courses_in_progress)}"
+            + "\n"
+            + f"Завершенные курсы: {', '.join(self.finished_courses)}"
+        )
 
 
 class Mentor:
@@ -47,7 +69,7 @@ class Lecturer(Mentor):
         if self.scores:
             common_score_lst = sum(self.scores.values(), start=[])
             return round(sum(common_score_lst) / len(common_score_lst), 1)
-        elif not self.scores:
+        else:
             return "Нет оценок"
 
         # task 3
@@ -84,9 +106,14 @@ class Reviewer(Mentor):
 some_student = Student("Ruoy", "Eman", "male")
 some_student.courses_in_progress += ["Python"]
 some_student.courses_in_progress += ["Git"]
+some_student.finished_courses += ["Введение в программирование"]
 
 
 some_reviewer = Reviewer("Some", "Buddy")
+some_reviewer.courses_attached += ["Python"]
+some_reviewer.courses_attached += ["Git"]
+some_reviewer.rate_hw(some_student, "Python", 8)
+some_reviewer.rate_hw(some_student, "Git", 10)
 
 some_lecturer = Lecturer("Gvido", "Van")
 some_lecturer.courses_attached += ["Python"]
@@ -96,7 +123,10 @@ some_student.rate_lecturer(some_lecturer, "Python", 9)
 some_student.rate_lecturer(some_lecturer, "Python", 10)
 some_student.rate_lecturer(some_lecturer, "Git", 5)
 
+# справочно
+# some_lecturer.show_scores()
+# some_student.show_grades()
+
 print(some_reviewer)
 print(some_lecturer)
-# справочно
-some_lecturer.show_scores()
+print(some_student)
