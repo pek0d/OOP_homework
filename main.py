@@ -20,19 +20,19 @@ class Student:
         else:
             return "Ошибка"
 
-    # Average student grade
     def avg_grade(self):
+        """Cчитает среднюю оценку студента"""
         if self.grades:
             common_grade_lst = sum(self.grades.values(), start=[])
             return round(sum(common_grade_lst) / len(common_grade_lst), 1)
         else:
             return "Нет оценок"
 
-    # справочно
     def show_grades(self):
+        """Выводит все оценки студента"""
         print(f"В словаре с оценками студента: {self.grades}")
 
-    # task 3.1
+    # task 3.1 (магичечский метод строки)
     def __str__(self):
         return (
             f"Имя: {self.name}"
@@ -67,19 +67,19 @@ class Lecturer(Mentor):
         super().__init__(name, surname)
         self.scores = {}
 
-    # справочно
     def show_scores(self):
+        """Выводит все баллы лектора"""
         print(f"В словаре с оценками лектора: {self.scores}")
 
-    # Average lecturer score
     def avg_score(self):
+        """Cчитает средний балл лектора"""
         if self.scores:
             common_score_lst = sum(self.scores.values(), start=[])
             return round(sum(common_score_lst) / len(common_score_lst), 1)
         else:
             return "Нет оценок"
 
-    # task 3.1
+    # task 3.1 (магичечский метод строки)
     def __str__(self):
         return (
             f"Имя: {self.name}"
@@ -116,6 +116,7 @@ class Reviewer(Mentor):
         return f"Имя: {self.name}" + "\n" + f"Фамилия: {self.surname}"
 
 
+# создание экземпляров
 some_student1 = Student("Ruoy", "Eman", "male")
 some_student1.courses_in_progress += ["Python"]
 some_student1.courses_in_progress += ["Git"]
@@ -124,11 +125,10 @@ some_student1.finished_courses += ["Введение в программиров
 some_student2 = Student("Lupa", "Pupa", "female")
 some_student2.courses_in_progress += ["Python"]
 some_student2.courses_in_progress += ["Git"]
-some_student2.finished_courses += ["GIT база"]
+some_student2.finished_courses += ["GIT базовый"]
 
 some_lecturer1 = Lecturer("Gvido", "Van")
 some_lecturer1.courses_attached += ["Python"]
-
 some_lecturer2 = Lecturer("Tig", "Master")
 some_lecturer2.courses_attached += ["Git"]
 
@@ -166,15 +166,39 @@ print()
 # task 3.2 (for Student())
 print(some_student1 < some_student2)
 # task 3.2 (for Lecturer())
-print(some_lecturer1 < some_lecturer2)
+print(some_lecturer1 > some_lecturer2)
 
-# task4
+# task 4.1
 student_lst = [some_student1, some_student2]
 
 
 def avg_grade_all_students(students_lst, course):
+    """Считает среднюю оценку всех студентов"""
+    overall_grade = []
     if students_lst:
         for student in student_lst:
             for key, value in student.grades.items():
                 if key == course:
-                    return round(sum(value) / len(value), 1)
+                    overall_grade += value
+        return round(sum(overall_grade) / len(overall_grade), 1)
+
+
+print(avg_grade_all_students(student_lst, "Python"))
+
+
+# task 4.2
+lecturer_lst = [some_lecturer1, some_lecturer2]
+
+
+def avg_score_all_lecturers(lecturer_lst, course):
+    """Считает среднюю оценку всех лекторов"""
+    overall_score = []
+    if lecturer_lst:
+        for lecturer in lecturer_lst:
+            for key, value in lecturer.scores.items():
+                if key == course:
+                    overall_score += value
+        return round(sum(overall_score) / len(overall_score), 1)
+
+
+print(avg_score_all_lecturers(lecturer_lst, "Git"))
