@@ -46,9 +46,12 @@ class Student:
             + f"Завершенные курсы: {', '.join(self.finished_courses)}"
         )
 
-    # task 3.2
+    # task 3.2 (магический метод сравнения less then)
     def __lt__(self, other):
-        return self.avg_grade() < other.avg_grade()
+        if self.avg_grade:
+            return self.avg_grade() < other.avg_grade()
+        else:
+            return "Нет оценок, нечего сравнивать"
 
 
 class Mentor:
@@ -86,9 +89,12 @@ class Lecturer(Mentor):
             + f"Средняя оценка за лекции: {self.avg_score()}"
         )
 
-    # task 3.2
+    # task 3.2 (магический метод сравнения less then)
     def __lt__(self, other):
-        return self.avg_score() < other.avg_score()
+        if self.avg_score:
+            return self.avg_score() < other.avg_score()
+        else:
+            return "Нет оценок, нечего сравнивать"
 
 
 # task 1 and task 2
@@ -105,38 +111,70 @@ class Reviewer(Mentor):
         else:
             return "Ошибка"
 
-    # task 3
+    # task 3.1
     def __str__(self):
         return f"Имя: {self.name}" + "\n" + f"Фамилия: {self.surname}"
 
 
-some_student = Student("Ruoy", "Eman", "male")
-some_student.courses_in_progress += ["Python"]
-some_student.courses_in_progress += ["Git"]
-some_student.finished_courses += ["Введение в программирование"]
+some_student1 = Student("Ruoy", "Eman", "male")
+some_student1.courses_in_progress += ["Python"]
+some_student1.courses_in_progress += ["Git"]
+some_student1.finished_courses += ["Введение в программирование"]
+
+some_student2 = Student("Lupa", "Pupa", "female")
+some_student2.courses_in_progress += ["Python"]
+some_student2.courses_in_progress += ["Git"]
+some_student2.finished_courses += ["GIT база"]
+
+some_lecturer1 = Lecturer("Gvido", "Van")
+some_lecturer1.courses_attached += ["Python"]
+
+some_lecturer2 = Lecturer("Tig", "Master")
+some_lecturer2.courses_attached += ["Git"]
+
+some_reviewer1 = Reviewer("Some", "Buddy")
+some_reviewer1.courses_attached += ["Python"]
+some_reviewer1.rate_hw(some_student1, "Python", 8)
+some_reviewer1.rate_hw(some_student2, "Python", 6)
+
+some_reviewer2 = Reviewer("Linus", "Torwalds")
+some_reviewer2.courses_attached += ["Git"]
+some_reviewer2.rate_hw(some_student1, "Git", 10)
+some_reviewer2.rate_hw(some_student2, "Git", 10)
 
 
-some_reviewer = Reviewer("Some", "Buddy")
-some_reviewer.courses_attached += ["Python"]
-some_reviewer.courses_attached += ["Git"]
-some_reviewer.rate_hw(some_student, "Python", 8)
-some_reviewer.rate_hw(some_student, "Git", 10)
-
-some_lecturer = Lecturer("Gvido", "Van")
-some_lecturer.courses_attached += ["Python"]
-some_lecturer.courses_attached += ["Git"]
-
-some_student.rate_lecturer(some_lecturer, "Python", 9)
-some_student.rate_lecturer(some_lecturer, "Python", 10)
-some_student.rate_lecturer(some_lecturer, "Git", 5)
+some_student1.rate_lecturer(some_lecturer1, "Python", 9)
+some_student1.rate_lecturer(some_lecturer2, "Git", 5)
+some_student2.rate_lecturer(some_lecturer1, "Python", 6)
+some_student2.rate_lecturer(some_lecturer2, "Git", 5)
 
 # справочно
-# some_lecturer.show_scores()
-# some_student.show_grades()
+# some_lecturer1.show_scores()
+# some_student1.show_grades()
 
 # task 3.1
-print(some_reviewer)
-print(some_lecturer)
-print(some_student)
-# task 3.2
-print(int(some_student.avg_grade()) < int(some_lecturer.avg_score()))
+print(some_reviewer1)
+print()
+
+print(some_lecturer1)
+print()
+
+print(some_student1)
+print()
+
+
+# task 3.2 (for Student())
+print(some_student1 < some_student2)
+# task 3.2 (for Lecturer())
+print(some_lecturer1 < some_lecturer2)
+
+# task4
+student_lst = [some_student1, some_student2]
+
+
+def avg_grade_all_students(students_lst, course):
+    if students_lst:
+        for student in student_lst:
+            for key, value in student.grades.items():
+                if key == course:
+                    return round(sum(value) / len(value), 1)
