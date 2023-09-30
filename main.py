@@ -8,6 +8,7 @@ class Student:
         self.grades = {}
 
     def rate_lecturer(self, lecturer, course, score):
+        """Оценивает лектора"""
         if (
             isinstance(lecturer, Lecturer)
             and course in self.courses_in_progress
@@ -103,6 +104,7 @@ class Reviewer(Mentor):
         super().__init__(name, surname)
 
     def rate_hw(self, student, course, grade):
+        """Оценивает студента"""
         if isinstance(student, Student) and course in self.courses_attached:
             if course in student.grades:
                 student.grades[course] += [grade]
@@ -111,12 +113,12 @@ class Reviewer(Mentor):
         else:
             return "Ошибка"
 
-    # task 3.1
+    # task 3.1 (магичечский метод строки)
     def __str__(self):
         return f"Имя: {self.name}" + "\n" + f"Фамилия: {self.surname}"
 
 
-# создание экземпляров
+# СОЗДАНИЕ ЭКЗЕМПЛЯРОВ (task 4)
 some_student1 = Student("Ruoy", "Eman", "male")
 some_student1.courses_in_progress += ["Python"]
 some_student1.courses_in_progress += ["Git"]
@@ -125,47 +127,53 @@ some_student1.finished_courses += ["Введение в программиров
 some_student2 = Student("Lupa", "Pupa", "female")
 some_student2.courses_in_progress += ["Python"]
 some_student2.courses_in_progress += ["Git"]
-some_student2.finished_courses += ["GIT базовый"]
+some_student2.finished_courses += ["GIT для начинающих"]
 
 some_lecturer1 = Lecturer("Gvido", "Van")
 some_lecturer1.courses_attached += ["Python"]
+
 some_lecturer2 = Lecturer("Tig", "Master")
 some_lecturer2.courses_attached += ["Git"]
 
 some_reviewer1 = Reviewer("Some", "Buddy")
 some_reviewer1.courses_attached += ["Python"]
-some_reviewer1.rate_hw(some_student1, "Python", 8)
-some_reviewer1.rate_hw(some_student2, "Python", 6)
 
 some_reviewer2 = Reviewer("Linus", "Torwalds")
 some_reviewer2.courses_attached += ["Git"]
+
+# Вызов всех созданных методов
+
+some_reviewer1.rate_hw(some_student1, "Python", 8)
+some_reviewer1.rate_hw(some_student2, "Python", 6)
 some_reviewer2.rate_hw(some_student1, "Git", 10)
 some_reviewer2.rate_hw(some_student2, "Git", 10)
-
 
 some_student1.rate_lecturer(some_lecturer1, "Python", 9)
 some_student1.rate_lecturer(some_lecturer2, "Git", 5)
 some_student2.rate_lecturer(some_lecturer1, "Python", 6)
 some_student2.rate_lecturer(some_lecturer2, "Git", 5)
 
-# справочно
+# Справочно
 # some_lecturer1.show_scores()
 # some_student1.show_grades()
 
-# task 3.1
+# Вызов перегруженных методов (task 3.1)
 print(some_reviewer1)
+# Добавлено для читаемости принтов (пустая строка)
 print()
 
 print(some_lecturer1)
+# Добавлено для читаемости принтов (пустая строка)
 print()
 
 print(some_student1)
+# Добавлено для читаемости принтов (пустая строка)
 print()
 
 
-# task 3.2 (for Student())
+# Вызов перегруженного метода (task 3.2 (for Student())
 print(some_student1 < some_student2)
-# task 3.2 (for Lecturer())
+# Вызов перегруженного метода (task 3.2 (for Lecturer())
 print(some_lecturer1 > some_lecturer2)
 
 # task 4.1
@@ -181,6 +189,8 @@ def avg_grade_all_students(students_lst, course):
                 if key == course:
                     overall_grade += value
         return round(sum(overall_grade) / len(overall_grade), 1)
+    else:
+        return "Список студентов пустой, нечего считать"
 
 
 print(avg_grade_all_students(student_lst, "Python"))
@@ -191,7 +201,7 @@ lecturer_lst = [some_lecturer1, some_lecturer2]
 
 
 def avg_score_all_lecturers(lecturer_lst, course):
-    """Считает среднюю оценку всех лекторов"""
+    """Считает средний балл всех лекторов"""
     overall_score = []
     if lecturer_lst:
         for lecturer in lecturer_lst:
@@ -199,6 +209,8 @@ def avg_score_all_lecturers(lecturer_lst, course):
                 if key == course:
                     overall_score += value
         return round(sum(overall_score) / len(overall_score), 1)
+    else:
+        return "Список лекторов пустой, нечего считать"
 
 
 print(avg_score_all_lecturers(lecturer_lst, "Git"))
