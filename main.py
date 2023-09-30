@@ -32,7 +32,7 @@ class Student:
     def show_grades(self):
         print(f"В словаре с оценками студента: {self.grades}")
 
-    # task 3
+    # task 3.1
     def __str__(self):
         return (
             f"Имя: {self.name}"
@@ -45,6 +45,10 @@ class Student:
             + "\n"
             + f"Завершенные курсы: {', '.join(self.finished_courses)}"
         )
+
+    # task 3.2
+    def __lt__(self, other):
+        return self.avg_grade() < other.avg_grade()
 
 
 class Mentor:
@@ -72,8 +76,7 @@ class Lecturer(Mentor):
         else:
             return "Нет оценок"
 
-        # task 3
-
+    # task 3.1
     def __str__(self):
         return (
             f"Имя: {self.name}"
@@ -82,6 +85,10 @@ class Lecturer(Mentor):
             + "\n"
             + f"Средняя оценка за лекции: {self.avg_score()}"
         )
+
+    # task 3.2
+    def __lt__(self, other):
+        return self.avg_score() < other.avg_score()
 
 
 # task 1 and task 2
@@ -127,6 +134,9 @@ some_student.rate_lecturer(some_lecturer, "Git", 5)
 # some_lecturer.show_scores()
 # some_student.show_grades()
 
+# task 3.1
 print(some_reviewer)
 print(some_lecturer)
 print(some_student)
+# task 3.2
+print(int(some_student.avg_grade()) < int(some_lecturer.avg_score()))
