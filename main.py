@@ -40,14 +40,18 @@ class Lecturer(Mentor):
 
     # справочно
     def show_scores(self):
-        print(f"В словаре лектора: {self.scores}")
+        print(f"В словаре с оценками лектора: {self.scores}")
 
     # Average lecturer score
     def avg_score(self):
-        common_lst = sum(self.scores.values(), start=[])
-        return round(sum(common_lst) / len(common_lst), 1)
+        if self.scores:
+            common_score_lst = sum(self.scores.values(), start=[])
+            return round(sum(common_score_lst) / len(common_score_lst), 1)
+        elif not self.scores:
+            return "Нет оценок"
 
-    # task 3
+        # task 3
+
     def __str__(self):
         return (
             f"Имя: {self.name}"
@@ -90,7 +94,7 @@ some_lecturer.courses_attached += ["Git"]
 
 some_student.rate_lecturer(some_lecturer, "Python", 9)
 some_student.rate_lecturer(some_lecturer, "Python", 10)
-some_student.rate_lecturer(some_lecturer, "Git", 4)
+some_student.rate_lecturer(some_lecturer, "Git", 5)
 
 print(some_reviewer)
 print(some_lecturer)
